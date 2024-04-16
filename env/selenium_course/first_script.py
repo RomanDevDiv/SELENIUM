@@ -472,56 +472,139 @@
 #     browser.quit()
 
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-import time
-import math
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# import time
+# import math
 
-# Open the webpage
-driver = webdriver.Chrome()
-driver.get("https://suninjuly.github.io/alert_accept.html")
+# # Open the webpage
+# driver = webdriver.Chrome()
+# driver.get("https://suninjuly.github.io/alert_accept.html")
 
-# Find and click the button to trigger the confirmation
-button = driver.find_element(By.CSS_SELECTOR, 'button.btn.btn-primary')
-button.click()
+# # Find and click the button to trigger the confirmation
+# button = driver.find_element(By.CSS_SELECTOR, 'button.btn.btn-primary')
+# button.click()
 
-# Switch to the alert and accept it
-alert = driver.switch_to.alert
-alert.accept()
+# # Switch to the alert and accept it
+# alert = driver.switch_to.alert
+# alert.accept()
 
-time.sleep(3)
+# time.sleep(3)
 
-# Find the input field, calculate and input the value
-input_field = driver.find_element(By.CSS_SELECTOR, '#answer')
-x_value = int(input_field.get_attribute('value'))
-input_field.clear()
-input_field.send_keys(calc(x_value))
+# # Find the input field, calculate and input the value
+# input_field = driver.find_element(By.CSS_SELECTOR, '#answer')
+# x_value = int(input_field.get_attribute('value'))
+# input_field.clear()
+# input_field.send_keys(calc(x_value))
 
-def calc(x):
-    return str(math.log(abs(12 * math.sin(x))))
+# def calc(x):
+#     return str(math.log(abs(12 * math.sin(x))))
 
-print(calc(x_value))
+# print(calc(x_value))
 
-time.sleep(3)
+# time.sleep(3)
 
-# Find and click the submit button
-submit_button = driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]')
-submit_button.click()
-
-time.sleep(5)
-driver.quit()
-
-# # Solve the captcha on the new page
-# # You can add your code here to interact with the elements on the new page and solve the captcha
-
-# # Calculate the result for the new page
-# # Find the input field and input the calculated result
-# result_input = driver.find_element(By.ID, "answer")
-# result_input.send_keys(str(result))
-
-# # Find and submit the form
+# # Find and click the submit button
 # submit_button = driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]')
 # submit_button.click()
-# # Wait for a few seconds before closing the browser
+
 # time.sleep(5)
 # driver.quit()
+
+# # # Solve the captcha on the new page
+# # # You can add your code here to interact with the elements on the new page and solve the captcha
+
+# # # Calculate the result for the new page
+# # # Find the input field and input the calculated result
+# # result_input = driver.find_element(By.ID, "answer")
+# # result_input.send_keys(str(result))
+
+# # # Find and submit the form
+# # submit_button = driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]')
+# # submit_button.click()
+# # # Wait for a few seconds before closing the browser
+# # time.sleep(5)
+# # driver.quit()
+
+
+#Next Lesson
+# Задача:
+# открыть страницу
+# http://suninjuly.github.io/explicit_wait2.html
+#  дождаться когда цена будет 100$
+# нажать кнопку book
+# решить уже известную нам задачу 
+
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import math
+import time
+
+
+driver = webdriver.Chrome()
+driver.get("http://suninjuly.github.io/explicit_wait2.html")
+
+try:
+    # жду элемента с идентификатором "price" и текстом "$100"
+    price_element = WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.ID, "price"), "$100"))
+
+    # Кнопка "Book" 
+    book_button = driver.find_element(By.ID, "book")
+    book_button.click()
+
+    # Получаю значение из элемента с идентификатором "input_value" и вычисляем результат
+    input_element = driver.find_element(By.ID, "input_value")
+    x = int(input_element.text)
+    result = str(math.log(abs(12 * math.sin(x))))
+
+    # Ввожу результат в элемент с идентификатором "answer" и очищаем его сначала
+    answer_input = driver.find_element(By.ID, "answer")
+    answer_input.clear()
+    answer_input.send_keys(str(result))
+
+    # Нажимаем кнопку "Solve", которая будет нажата после выполнения ожидания
+    submit_button = driver.find_element(By.ID, "solve")
+    submit_button.click()
+
+finally:
+    # Ждем 5 секунд перед закрытием браузера
+    time.sleep(5)
+    driver.quit()
+
+
+# #Solution 2:
+
+# #Webdriver - это и есть набор команд для управления браузером
+# from selenium import webdriver
+
+# #импортируем класс By , который позволяет выбрать способ поиска элемента
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.ui import Select
+
+# import time
+# import math
+# import os
+
+# try:
+#     browser = webdriver.Chrome()
+#     browser.get("http://suninjuly.github.io/explicit_wait2.html")
+#     element = WebDriverWait(browser, 12).until(EC.text_to_be_present_in_element((By.ID,'price'),'100'))
+#     btn = browser.find_element(By.ID, 'book')
+#     btn.click()
+#     def calc(x):
+#         return str(math.log(abs(12*math.sin(x))))
+#     x = browser.find_element(By.ID,'input_value')
+#     x = int(x.text)
+#     input_block = browser.find_element(By.ID,'answer')
+#     input_block.send_keys(str(calc(x)))
+#     btn_2 = browser.find_element(By.ID,'solve')
+#     btn_2.click()
+
+# finally:
+#     time.sleep(10)
+#     browser.quit()
