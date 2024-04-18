@@ -789,7 +789,9 @@ def test_eception2():
         browser = webdriver.Chrome()
         browser.get('https://easysmarthub.ru/kak-ustanovit-selenium-webdriver-na-windows-i-zapustit-lokalnoe-okruzhenie-python-v-vs-code/')
         with pytest.raises(NoSuchElementException):
-            browser.find_element(By.CSS_SELECTOR,"[id='molodec']") #верный - то есть будет красным поскольку кнопка действительно есть на сайте
+            # browser.find_element(By.CSS_SELECTOR,"[id='molodec']") #верный - то есть будет красным поскольку кнопка действительно есть на сайте
+            browser.find_element(By.CSS_SELECTOR, 'a#molodec') #верный - то есть будет красным поскольку кнопка действительно есть на сайте     'a#molodec' a-link, #molodec - id
+            
             pytest.fail('Не должна отображаться кнопка ЧУДО на странице')
 
 
