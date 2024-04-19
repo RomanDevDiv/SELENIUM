@@ -903,7 +903,7 @@ class TestEasysmarthub(unittest.TestCase):
             input_3.send_keys("test")
             
         
-            # img_path = r"C:\SELENIUM\sel\img1.jpg"
+            img_path = r"C:\SELENIUM\sel\img1.jpg"
             input_browse_img = browser.find_element(By.CSS_SELECTOR, '[id="kurs-zakonchilsya"]')
             input_browse_img.send_keys(img_path)
                
