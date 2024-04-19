@@ -764,36 +764,168 @@ from selenium import webdriver
 
 
 
-#импортируем класс By , который позволяет выбрать способ поиска элемента
+# #импортируем класс By , который позволяет выбрать способ поиска элемента
+# from selenium.webdriver.common.by import By
+# from selenium.common.exceptions import NoSuchElementException
+# import pytest
+# import time
+
+
+# def test_eception1():
+#     try:
+#         browser = webdriver.Chrome()
+#         browser.get('https://easysmarthub.ru/kak-ustanovit-selenium-webdriver-na-windows-i-zapustit-lokalnoe-okruzhenie-python-v-vs-code/')
+#         with pytest.raises(NoSuchElementException):
+#             browser.find_element(By.CSS_SELECTOR,"[id='molodec1']") #не верный - то есть будет зеленым так как кнопки нету на сайте
+#             pytest.fail('Не должна отображаться кнопка ЧУДО на странице1')
+
+
+#     finally:
+#         browser.quit()
+
+
+# def test_eception2():
+#     try:
+#         browser = webdriver.Chrome()
+#         browser.get('https://easysmarthub.ru/kak-ustanovit-selenium-webdriver-na-windows-i-zapustit-lokalnoe-okruzhenie-python-v-vs-code/')
+#         with pytest.raises(NoSuchElementException):
+#             # browser.find_element(By.CSS_SELECTOR,"[id='molodec']") #верный - то есть будет красным поскольку кнопка действительно есть на сайте
+#             browser.find_element(By.CSS_SELECTOR, 'a#molodec') #верный - то есть будет красным поскольку кнопка действительно есть на сайте     'a#molodec' a-link, #molodec - id
+            
+#             pytest.fail('Не должна отображаться кнопка ЧУДО на странице')
+
+
+#     finally:
+#         browser.quit()
+
+#Next lesson 19042024
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# import unittest
+# import time
+
+
+# class TestEasysmarthub(unittest.TestCase):
+#     def test_1_all(self):
+#         try:
+#             browser = webdriver.Chrome()
+#             browser.implicitly_wait(5)
+#             browser.get("https://easysmarthub.ru/contact/")
+           
+#             button_submit = browser.find_element(By.CSS_SELECTOR, '[type="submit"]')
+#             button_submit.click()
+           
+#             text1 = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".wpcf7-response-output")))
+          
+#             self.assertEqual("В одном или нескольких полях указана ошибка. Пожалуйста, проверьте и повторите попытку", text1.text, "should be equal")
+
+#         finally:
+           
+#             browser.quit()
+
+
+#     def test_2_partially(self):
+#         try:
+#             browser = webdriver.Chrome()
+#             browser.implicitly_wait(5)
+#             browser.get("https://easysmarthub.ru/contact/")
+#             input_1 = browser.find_element(By.NAME, 'your-name')
+#             input_1.send_keys("test")
+#             input_2 = browser.find_element(By.NAME, 'your-email')
+#             input_2.send_keys("test")
+#             input_3 = browser.find_element(By.NAME, 'your-subject')
+#             input_3.send_keys("test")
+#             checkbox = browser.find_element(By.NAME, 'gdpr')
+#             checkbox.click()
+           
+#             button_submit = browser.find_element(By.CSS_SELECTOR, '[type="submit"]')
+#             button_submit.click()
+           
+#             text1 = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".wpcf7-response-output")))
+#             text2 = WebDriverWait(browser,10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'wpcf7-not-valid-tip')))
+           
+#             self.assertEqual("The e-mail address entered is invalid.", text2.text, "should be equal")
+#         finally:
+           
+#             browser.quit()
+
+# if __name__ == "__main__":
+#     unittest.main()
+
+
+#Next lesson
+# По примеру ниже протестировать адрес тот же, добавлен загрузить файл:
+# Отправить форму без заполненных полей
+# Отправить форму без файла
+# Отправить форму без Email 
+# Отправить форму с зеленым результатом(рабочая)
+
+from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
-import pytest
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import unittest
 import time
 
 
-def test_eception1():
-    try:
-        browser = webdriver.Chrome()
-        browser.get('https://easysmarthub.ru/kak-ustanovit-selenium-webdriver-na-windows-i-zapustit-lokalnoe-okruzhenie-python-v-vs-code/')
-        with pytest.raises(NoSuchElementException):
-            browser.find_element(By.CSS_SELECTOR,"[id='molodec1']") #не верный - то есть будет зеленым так как кнопки нету на сайте
-            pytest.fail('Не должна отображаться кнопка ЧУДО на странице1')
+class TestEasysmarthub(unittest.TestCase):
+    def test_1_all(self):
+        try:
+            browser = webdriver.Chrome()
+            browser.implicitly_wait(5)
+            browser.get("https://easysmarthub.ru/contact/")
+           
+            button_submit = browser.find_element(By.CSS_SELECTOR, '[type="submit"]')
+            button_submit.click()
+           
+            text1 = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".wpcf7-response-output")))
+          
+            self.assertEqual("В одном или нескольких полях указана ошибка. Пожалуйста, проверьте и повторите попытку", text1.text, "should be equal")
+
+        finally:
+           
+            browser.quit()
 
 
-    finally:
-        browser.quit()
-
-
-def test_eception2():
-    try:
-        browser = webdriver.Chrome()
-        browser.get('https://easysmarthub.ru/kak-ustanovit-selenium-webdriver-na-windows-i-zapustit-lokalnoe-okruzhenie-python-v-vs-code/')
-        with pytest.raises(NoSuchElementException):
-            # browser.find_element(By.CSS_SELECTOR,"[id='molodec']") #верный - то есть будет красным поскольку кнопка действительно есть на сайте
-            browser.find_element(By.CSS_SELECTOR, 'a#molodec') #верный - то есть будет красным поскольку кнопка действительно есть на сайте     'a#molodec' a-link, #molodec - id
+    def test_2_partially(self):
+        try:
+            browser = webdriver.Chrome()
+            browser.implicitly_wait(5)
+            browser.get("https://easysmarthub.ru/contact/")
             
-            pytest.fail('Не должна отображаться кнопка ЧУДО на странице')
+            input_1 = browser.find_element(By.NAME, 'your-name')
+            input_1.send_keys("test")
+            input_2 = browser.find_element(By.NAME, 'your-email')
+            input_2.send_keys("test")
+            input_3 = browser.find_element(By.NAME, 'your-subject')
+            input_3.send_keys("test")
+            
+        
+            # img_path = r"C:\SELENIUM\sel\img1.jpg"
+            input_browse_img = browser.find_element(By.CSS_SELECTOR, '[id="kurs-zakonchilsya"]')
+            input_browse_img.send_keys(img_path)
+               
+            checkbox = browser.find_element(By.NAME, 'gdpr')
+            checkbox.click()
+           
+           
+            time.sleep(5)
+            button_submit = browser.find_element(By.CSS_SELECTOR, '[type="submit"]')
+            button_submit.click()
+           
+            text1 = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".wpcf7-response-output")))
+            text2 = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'wpcf7-not-valid-tip')))
+           
+            self.assertEqual("Одно или несколько полей содержат ошибочные данные. Пожалуйста, проверьте их и попробуйте ещё раз.", text1.text)
+
+        finally:
+            browser.quit()
 
 
-    finally:
-        browser.quit()
+if __name__ == "__main__":
+    unittest.main()
+
+
+
